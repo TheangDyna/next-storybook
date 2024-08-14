@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`${baseStyles} ${variantStyles[variant][color]} ${disabledStyles} ${className}`}
+      className={`${baseStyles} ${variantStyles[variant]?.[color]} ${disabledStyles} ${className}`}
       disabled={disabled}
       {...props}
     >
