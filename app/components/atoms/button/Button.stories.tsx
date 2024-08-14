@@ -26,6 +26,7 @@ export const Outline: Story = {
     variant: "outline",
   },
 };
+
 export const Text: Story = {
   args: {
     children: "Button Text",
