@@ -8,7 +8,7 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 const TextField: React.FC<TextFieldProps> = ({
   label,
   error,
-  className,
+  className = "",
   ...props
 }) => {
   return (
@@ -16,7 +16,6 @@ const TextField: React.FC<TextFieldProps> = ({
       {label && (
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor={label}
         >
           {label}
         </label>
@@ -26,7 +25,6 @@ const TextField: React.FC<TextFieldProps> = ({
           error ? "border-red-500" : ""
         }`}
         {...props}
-        name={label}
       />
       {error && <p className="text-red-500 text-xs italic">{error}</p>}
     </div>

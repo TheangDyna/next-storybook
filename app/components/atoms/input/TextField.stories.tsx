@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import TextField from "./TextField";
+import { fn } from "@storybook/test";
 
 const meta: Meta<typeof TextField> = {
   title: "SabaiCode/Atoms/TextField",
   component: TextField,
+  args: {
+    onChange: fn(),
+  },
 };
 
 export default meta;

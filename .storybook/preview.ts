@@ -3,8 +3,11 @@ import "@/app/globals.css";
 
 const preview: Preview = {
   tags: ["autodocs"],
+  argTypes: {
+    variant: {control: 'select'},
+    color: {control: 'select'}
+  },
   parameters: {
-    actions: { argTypesRegex: "^on.*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,

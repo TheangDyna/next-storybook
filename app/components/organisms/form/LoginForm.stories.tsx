@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import LoginForm from "./LoginForm";
 import { userEvent, within } from "@storybook/test";
-import { action } from "@storybook/addon-actions";
+import { fn } from "@storybook/test";
 
 const meta: Meta<typeof LoginForm> = {
   title: "SabaiCode/Organisms/LoginForm",
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof LoginForm>;
 
 export const Default: Story = {
   args: {
-    onSubmit: action("onSubmit"),
+    onSubmit: fn(),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

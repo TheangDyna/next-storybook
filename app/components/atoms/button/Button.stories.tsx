@@ -32,3 +32,10 @@ export const Text: Story = {
     variant: "text",
   },
 };
+
+export const Disable: Story = {
+  args: {
+    children: "Button Disable",
+    disabled: true
+  }
+};

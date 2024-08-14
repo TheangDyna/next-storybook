@@ -1,3 +1,4 @@
+import { cn } from "@/app/utils";
 import React, { ReactNode, ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -5,6 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "contain" | "outline" | "text";
   color?: "primary" | "secondary" | "success" | "error";
   className?: string;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -44,8 +46,18 @@ const Button: React.FC<ButtonProps> = ({
   const disabledStyles = disabled ? "opacity-50 cursor-not-allowed" : "";
 
   return (
+    // without merge class
+    // <button
+    //   className={`${baseStyles} ${variantStyles[variant]?.[color]} ${disabledStyles} ${className}`}
+    //   disabled={disabled}
+    //   {...props}
+    // >
+    //   {children}
+    // </button>
+
+    // within merge class
     <button
-      className={`${baseStyles} ${variantStyles[variant]?.[color]} ${disabledStyles} ${className}`}
+      className={cn(baseStyles, variantStyles[variant]?.[color],disabledStyles, className )}
       disabled={disabled}
       {...props}
     >
