@@ -3,10 +3,6 @@ import "@/app/globals.css";
 
 const preview: Preview = {
   tags: ["autodocs"],
-  argTypes: {
-    variant: {control: 'select'},
-    color: {control: 'select'}
-  },
   parameters: {
     controls: {
       matchers: {

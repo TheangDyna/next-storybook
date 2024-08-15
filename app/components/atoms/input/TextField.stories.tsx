@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import TextField from "./TextField";
-import { fn } from "@storybook/test";
+import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 
 const meta: Meta<typeof TextField> = {
   title: "SabaiCode/Atoms/TextField",
@@ -46,5 +46,28 @@ export const ErrorField: Story = {
     type: "text",
     name: "error",
     error: "This field is required",
+  },
+};
+
+export const WithInteraction: Story = {
+  args: {
+    ...Default.args,
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const testValue = "Type some text...";
+
+    const input = canvas.getByPlaceholderText("example...");
+
+    await step("Change input", async () => {
+      await userEvent.type(input, testValue, {
+        delay: 100,
+      });
+    });
+
+    await waitFor(() => {
+      expect(args.onChange).toHaveBeenCalled();
+      expect(input).toHaveValue(testValue);
+    });
   },
 };

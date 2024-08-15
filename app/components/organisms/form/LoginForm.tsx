@@ -32,12 +32,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     event.preventDefault();
     let hasError = false;
 
-    if (username.length <= 0) {
+    if (username.trim() === "") {
       setUsernameError("Username is required.");
       hasError = true;
     }
 
-    if (password.length <= 0) {
+    if (password.trim() === "") {
       setPasswordError("Password is required.");
       hasError = true;
     }
@@ -53,12 +53,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       className="w-80 mx-auto p-4 border rounded bg-white"
     >
       <TextField
-        label="username"
+        label="Username"
         value={username}
         onChange={handleUsernameChange}
         error={usernameError}
         placeholder="Enter your username"
         className="mb-4"
+        name="username"
       />
       <TextField
         label="Password"
@@ -68,6 +69,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         error={passwordError}
         placeholder="Enter your password"
         className="mb-4"
+        name="password"
       />
       <Button type="submit" variant="contain" color="primary">
         Login

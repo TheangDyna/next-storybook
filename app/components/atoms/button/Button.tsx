@@ -13,8 +13,8 @@ const Button: React.FC<ButtonProps> = ({
   children,
   variant = "contain",
   color = "primary",
-  className = "",
   disabled = false,
+  className = "",
   ...props
 }) => {
   const baseStyles =
@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
     },
   };
   const disabledStyles = disabled ? "opacity-50 cursor-not-allowed" : "";
-  
+
   return (
     // without merge class
     // <button
@@ -57,7 +57,12 @@ const Button: React.FC<ButtonProps> = ({
 
     // within merge class
     <button
-      className={cn(baseStyles, variantStyles[variant]?.[color], disabledStyles, className )}
+      className={cn(
+        baseStyles,
+        variantStyles[variant]?.[color],
+        disabledStyles,
+        className
+      )}
       disabled={disabled}
       {...props}
     >
