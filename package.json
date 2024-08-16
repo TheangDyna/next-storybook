@@ -17,6 +17,7 @@
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
@@ -36,9 +37,16 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "eslint-plugin-storybook": "^0.8.0",
+    "msw": "^2.3.5",
+    "msw-storybook-addon": "^2.0.3",
     "postcss": "^8",
     "storybook": "^8.2.9",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

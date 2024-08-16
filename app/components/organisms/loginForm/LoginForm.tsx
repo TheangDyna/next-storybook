@@ -52,6 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       className="w-80 mx-auto p-4 border rounded bg-white"
     >
+      <h1 className="text-center text-xl">Login Form</h1>
       <TextField
         label="Username"
         value={username}
