@@ -12,9 +12,7 @@ interface Inputs {
   cpassword: string;
 }
 
-interface RegisterFormProps {}
-
-const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
+const RegisterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
@@ -22,11 +20,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
     formState: { errors },
   } = useForm<Inputs>();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const password = watch("password");
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+
     try {
       const res = await fetch(fakeEndpoint, {
         method: "POST",
@@ -39,16 +42,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
         }),
       });
 
-      console.log(res);
-
-      if (res.status === 401) {
-        throw new Error("Failed to register. Please try again.");
+      if (!res.ok) {
+        if (res.status === 409) {
+          throw new Error("User already exists. Please try logging in.");
+        } else if (res.status >= 400 && res.status < 500) {
+          throw new Error("Failed to register. Please check your input.");
+        } else {
+          throw new Error("Server error. Please try again later.");
+        }
       }
 
-      const result = await res.json();
-      console.log("Registration successful:", result);
-    } catch (error) {
-      console.error("Error:", error);
+      setSuccess("Registration successful!");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,18 +66,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
       noValidate
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h1 className="text-center text-xl">Register Form</h1>
+      <h1 className="text-center text-xl mb-4">Register Form</h1>
 
       <TextField
         type="email"
+        id="email"
         label="Email"
         placeholder="Enter your email"
-        name="email"
         register={register("email", {
           required: "Email is required.",
           pattern: {
             value: /\S+@\S+\.\S+/,
-            message: "Email is no valid.",
+            message: "Email is not valid.",
           },
         })}
         error={errors.email?.message}
@@ -77,17 +85,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
 
       <TextField
         type="password"
+        id="password"
         label="Password"
         placeholder="Enter your password"
         register={register("password", {
           required: "Password is required.",
           minLength: {
             value: 6,
-            message: "Password should be at-least 6 characters.",
+            message: "Password should be at least 6 characters long.",
           },
           maxLength: {
             value: 12,
-            message: "Password should too long.",
+            message: "Password should not exceed 12 characters.",
           },
         })}
         error={errors.password?.message}
@@ -95,20 +104,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
 
       <TextField
         type="password"
+        id="cpassword"
         label="Confirm Password"
-        placeholder="Enter your Confirm Password"
+        placeholder="Enter your confirm password"
         register={register("cpassword", {
-          required: "Confirm Password is required",
-          validate: (value) =>
-            value === password || "Confirm Password is not match",
+          required: "Confirm password is required.",
+          validate: (value) => value === password || "Passwords do not match.",
         })}
         error={errors.cpassword?.message}
       />
 
-      <Button className="w-full" type="submit">
-        Register
+      <Button className="w-full mt-4" type="submit" disabled={isLoading}>
+        {isLoading ? "Registering..." : "Register"}
       </Button>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+
+      {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
+      {success && <p className="text-sm text-green-500 mt-2">{success}</p>}
     </form>
   );
 };

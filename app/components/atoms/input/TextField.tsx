@@ -1,9 +1,10 @@
 import React, { InputHTMLAttributes } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-  register?: any;
+  register?: UseFormRegisterReturn;
 }
 
 const TextField: React.FC<TextFieldProps> = ({

@@ -54,6 +54,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     >
       <h1 className="text-center text-xl">Login Form</h1>
       <TextField
+        type="text"
         label="Username"
         value={username}
         onChange={handleUsernameChange}
@@ -63,8 +64,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         name="username"
       />
       <TextField
-        label="Password"
         type="password"
+        label="Password"
         value={password}
         onChange={handlePasswordChange}
         error={passwordError}
